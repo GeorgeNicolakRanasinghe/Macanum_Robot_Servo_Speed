@@ -19,7 +19,7 @@ class Car:
         self.car_record_time = time.time()
         self.car_sonic_servo_angle = 30
         self.car_sonic_servo_dir = 1
-        self.car_sonic_distance = [30, 30, 30]
+        self.car_sonic_distance = [15, 15, 15]
         self.time_compensate = 3 #Depend on your own car,If you want to get the best out of the rotation mode, change the value by experimenting.
         self.running = True
         self.start()
@@ -49,24 +49,24 @@ class Car:
         self.adc = None
 
     def run_motor_ultrasonic(self, distance):
-        if (distance[0] < 30 and distance[1] < 30 and distance[2] <30) or distance[1] < 30 :
+        if (distance[0] < 15 and distance[1] < 15 and distance[2] <15) or distance[1] < 15 :
             self.motor.set_motor_model(-1450,-1450,-1450,-1450) 
             time.sleep(0.1)   
             if distance[0] < distance[2]:
                 self.motor.set_motor_model(1450,1450,-1450,-1450)
             else :
                 self.motor.set_motor_model(-1450,-1450,1450,1450)
-        elif distance[0] < 30 and distance[1] < 30:
+        elif distance[0] < 15 and distance[1] < 15:
             self.motor.set_motor_model(1500,1500,-1500,-1500)
-        elif distance[2] < 30 and distance[1] < 30:
+        elif distance[2] < 15 and distance[1] < 15:
             self.motor.set_motor_model(-1500,-1500,1500,1500)
-        elif distance[0] < 20 :
+        elif distance[0] < 10 :
             self.motor.set_motor_model(2000,2000,-500,-500)
-            if distance[0] < 10 :
+            if distance[0] < 5 :
                 self.motor.set_motor_model(1500,1500,-1000,-1000)
-        elif distance[2] < 20 :
+        elif distance[2] < 10 :
             self.motor.set_motor_model(-500,-500,2000,2000)
-            if distance[2] < 10 :
+            if distance[2] < 5 :
                 self.motor.set_motor_model(-1500,-1500,1500,1500)
         else :
             self.motor.set_motor_model(600,600,600,600)
