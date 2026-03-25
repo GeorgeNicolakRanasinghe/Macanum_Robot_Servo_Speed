@@ -171,8 +171,9 @@ class Car:
                         print(f"Servo speed decreased to: {new_speed} degrees/step")
                     elif ch.lower() == 'q':
                         print("Stopping motors and closing...")
-                        self.motor.set_motor_model(0,0,0,0)  # Stop motors immediately
                         self.running = False
+                        self.motor.set_motor_model(0,0,0,0)  # Stop motors immediately
+                        time.sleep(0.5)  # Give motor command time to process
                         break
         except Exception as e:
             print(f"Note: Speed control not available on this platform: {e}")
@@ -194,8 +195,11 @@ def test_car_sonic(servo_speed=5):
             car.mode_ultrasonic()
     except KeyboardInterrupt:
         car.running = False
-        car.close()
-        print("\nEnd of program")
+    
+    car.motor.set_motor_model(0,0,0,0)  # Ensure motors stop
+    time.sleep(0.2)
+    car.close()
+    print("\nEnd of program")
 
 def test_car_infrared(servo_speed=5):
     car = Car(servo_speed=servo_speed)
@@ -208,8 +212,11 @@ def test_car_infrared(servo_speed=5):
             car.mode_infrared()
     except KeyboardInterrupt:
         car.running = False
-        car.close()
-        print("\nEnd of program")
+    
+    car.motor.set_motor_model(0,0,0,0)  # Ensure motors stop
+    time.sleep(0.2)
+    car.close()
+    print("\nEnd of program")
 
 def test_car_light(servo_speed=5):
     car = Car(servo_speed=servo_speed)
@@ -223,8 +230,11 @@ def test_car_light(servo_speed=5):
             car.mode_light()
     except KeyboardInterrupt:
         car.running = False
-        car.close()
-        print("\nEnd of program")
+    
+    car.motor.set_motor_model(0,0,0,0)  # Ensure motors stop
+    time.sleep(0.2)
+    car.close()
+    print("\nEnd of program")
 
 def test_car_rotate(servo_speed=5):
     car = Car(servo_speed=servo_speed)
@@ -234,12 +244,15 @@ def test_car_rotate(servo_speed=5):
     
     print("Program is starting...")
     try:
-        car.mode_rotate(0)
+        while car.running:
+            car.mode_rotate(0)
     except KeyboardInterrupt:
         car.running = False
-        print ("\nEnd of program")
-        car.motor.set_motor_model(0,0,0,0)
-        car.close()
+    
+    car.motor.set_motor_model(0,0,0,0)  # Ensure motors stop
+    time.sleep(0.2)
+    print ("\nEnd of program")
+    car.close()
 
 if __name__ == '__main__':
     import sys
