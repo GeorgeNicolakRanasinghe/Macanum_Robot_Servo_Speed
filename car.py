@@ -170,8 +170,10 @@ class Car:
                         new_speed = self.servo.decrease_servo_speed('0', 1)
                         print(f"Servo speed decreased to: {new_speed} degrees/step")
                     elif ch.lower() == 'q':
-                        print("Stopping...")
+                        print("Stopping motors and closing...")
+                        self.motor.set_motor_model(0,0,0,0)  # Stop motors immediately
                         self.running = False
+                        break
         except Exception as e:
             print(f"Note: Speed control not available on this platform: {e}")
             print("You can still change speed by restarting with --speed argument")
